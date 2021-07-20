@@ -1,0 +1,88 @@
+#!/usr/bin/python3
+
+# Author: z3r0day :: https://github.com/SxNade
+
+RED = '\033[1;31;48m'
+WHITE = "\33[0m"
+GREEN = '\033[1;32;48m'
+
+from typing import final
+import requests
+import sys
+import re
+import pyjs
+
+def banner(version):
+	print(f"[{GREEN}+{WHITE}] Initializing {RED}Mufasa{WHITE}.....v({RED}{version}{WHITE})")
+
+def get_content(url):
+	resp = requests.get(url, allow_redirects=True, timeout=5)
+	webcontent = resp.text
+	#webcontent = (resp.content).decode()
+	return webcontent
+
+def find_html_comments(resp):
+	comment_list = re.findall(r"<\!--.*?-->", resp, re.M)
+	comment_list = list(set(comment_list))
+	return comment_list
+
+def find_css_js_comments(resp):
+	comment_list = re.findall(r"/\*.*?\*/", resp, re.DOTALL)
+	return comment_list
+
+def fix_http(target_url, link_pgsrc):
+	if not 'http' in link_pgsrc:
+		url = f"{target_url}/{link_pgsrc}"
+		return url
+	else:
+		return link_pgsrc
+
+def make_requests(url):
+	print(f"[{GREEN}+{WHITE}] Searching for {RED}comments{WHITE} in the main page....\n")
+	webcontent = get_content(url)
+	comment_list = find_html_comments(webcontent)
+	print(comment_list)
+	print(f"\n[{GREEN}+{WHITE}] Gathering {RED}href{WHITE} links in Page.....\n")
+	list_links = depth_search(webcontent)
+	for link in list_links:
+		if '.css' in link:
+			final_url = fix_http(url, link)
+			print(f"[{GREEN}+{WHITE}] Searching {final_url}....")
+			url_resp = get_content(final_url)
+			list_comm = find_css_js_comments(url_resp)
+			print(list_comm)
+			print("\n")
+		else:
+			final_url = fix_http(url, link)
+			print(f"[{GREEN}+{WHITE}] Searching {final_url}....")
+			url_resp = get_content(final_url)
+			list_comm = find_html_comments(url_resp)
+			print(list_comm)
+			print("\n")
+	print(f"\n[{GREEN}+{WHITE}] Gathering {RED}Javascript{WHITE} Files in Page.....")
+	js_list = pyjs.js_search(webcontent)
+	for link in js_list:
+		final_url = fix_http(url, link)
+		print(f"[{GREEN}+{WHITE}] Searching {final_url}....")
+		url_resp = get_content(final_url)
+		list_comm = find_css_js_comments(url_resp)
+		print(list_comm)
+		print("\n")
+	#print(js_list)
+		
+
+
+def depth_search(webcontent):
+	links_list = re.findall(r'(?i)href=["\'](.*?)["\']', webcontent)
+	links_list = list(set(links_list))
+	return links_list
+
+banner("1.1-Alpha")
+if len(sys.argv) < 2:
+    print(f"\n[{RED}!{WHITE}] Insufficent Arguments supplied\n")
+    print("./mufasa <target-url>")
+    sys.exit()
+else:
+	global target_url
+	target_url = sys.argv[1]
+	make_requests(target_url)
