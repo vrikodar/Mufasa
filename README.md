@@ -15,3 +15,7 @@ Mufasa is a powerful comment scraper , mufasa can automcatically comments from J
       
       $ ./mufasa <Target-url>     {Don't add a slash at end , autofix wil be added tomorrow }
 
+
+# NOTE
+
+Mufasa also Finds out all the Href Links present in the page and then also Probes them For comments... will add a recursive option soon to also scan these internal pages in depth
