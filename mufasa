@@ -30,7 +30,7 @@ def get_content(url):
 	return webcontent
 
 def find_html_comments(resp):
-	comment_list = re.findall(r"<\!--.*?-->", resp, re.M)
+	comment_list = re.findall(r"<\!--.*?-->", resp, re.DOTALL)
 	comment_list = list(set(comment_list))
 	return comment_list
 
