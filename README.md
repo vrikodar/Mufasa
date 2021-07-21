@@ -13,7 +13,7 @@ Mufasa is a powerful comment scraper , mufasa can automatically scrape comments 
       $ cd Mufasa
       $ chmod +x mufasa
       
-      $ ./mufasa <Target-url>     {Don't add a slash at end , autofix wil be added tomorrow }
+      $ ./mufasa <Target-url>
 
 
 # NOTE
