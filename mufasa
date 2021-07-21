@@ -39,6 +39,8 @@ def find_css_js_comments(resp):
 	return comment_list
 
 def fix_http(target_url, link_pgsrc):
+	if link_pgsrc[0] == "/":
+		link_pgsrc = link_pgsrc[1:len(link_pgsrc)]
 	if not 'http' in link_pgsrc:
 		url = f"{target_url}/{link_pgsrc}"
 		return url
@@ -93,5 +95,9 @@ if len(sys.argv) < 2:
 else:
 	global target_url
 	target_url = sys.argv[1]
+	if target_url[-1] == "/":
+		target_url = target_url[:(len(target_url) - 1)]
+	#print(target_url)
 	make_requests(target_url)
+
 
