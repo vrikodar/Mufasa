@@ -24,10 +24,16 @@ except:
 	sys.exit(0)
 
 def get_content(url):
-	resp = requests.get(url, allow_redirects=True)
-	webcontent = resp.text
+	try:
+		resp = requests.get(url, allow_redirects=True)
+		webcontent = resp.text
+		return webcontent
+	except Exception as error:
+		print(f"[{RED}!{WHITE}] something went {RED}wrong{WHITE}...")
+		sys.exit(0)
+		pass
 	#webcontent = (resp.content).decode()
-	return webcontent
+	#webcontent = resp.text
 
 def find_html_comments(resp):
 	comment_list = re.findall(r"<\!--.*?-->", resp, re.DOTALL)
@@ -99,6 +105,4 @@ else:
 		target_url = target_url[:(len(target_url) - 1)]
 	#print(target_url)
 	make_requests(target_url)
-
-
 
