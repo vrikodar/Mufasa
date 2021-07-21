@@ -10,6 +10,6 @@ import re
 import sys
 
 def js_search(data_to_search_through):
-    js = re.findall(r"src=\"(.*\.js)", data_to_search_through)
+    js = re.findall(r'src=[" \']?(.*\.js)[\s > " \']', data_to_search_through)
     js_files = list(set(js))
     return js_files
