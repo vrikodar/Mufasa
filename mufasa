@@ -9,10 +9,19 @@ GREEN = '\033[1;32;48m'
 import requests
 import sys
 import re
-import pyjs
+import time
 
 def banner(version):
 	print(f"[{GREEN}+{WHITE}] Initializing {RED}Mufasa{WHITE}.....v({RED}{version}{WHITE})")
+	time.sleep(1)
+
+banner("1.1-Alpha")
+print(f"[{GREEN}+{WHITE}] Importing {RED}Modules{WHITE}.....")
+try:
+	import pyjs
+except:
+	print(f"[{RED}!{WHITE}] Error importing {GREEN}Javascript{WHITE} module\n")
+	sys.exit(0)
 
 def get_content(url):
 	resp = requests.get(url, allow_redirects=True, timeout=5)
@@ -76,7 +85,7 @@ def depth_search(webcontent):
 	links_list = list(set(links_list))
 	return links_list
 
-banner("1.1-Alpha")
+
 if len(sys.argv) < 2:
     print(f"\n[{RED}!{WHITE}] Insufficent Arguments supplied\n")
     print("./mufasa <target-url>")
@@ -85,3 +94,4 @@ else:
 	global target_url
 	target_url = sys.argv[1]
 	make_requests(target_url)
+
