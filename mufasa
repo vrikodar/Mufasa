@@ -24,7 +24,7 @@ except:
 	sys.exit(0)
 
 def get_content(url):
-	resp = requests.get(url, allow_redirects=True, timeout=5)
+	resp = requests.get(url, allow_redirects=True, timeout=10)
 	webcontent = resp.text
 	#webcontent = (resp.content).decode()
 	return webcontent
