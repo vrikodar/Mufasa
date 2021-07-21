@@ -6,7 +6,6 @@ RED = '\033[1;31;48m'
 WHITE = "\33[0m"
 GREEN = '\033[1;32;48m'
 
-from typing import final
 import requests
 import sys
 import re
