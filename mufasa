@@ -24,7 +24,7 @@ except:
 	sys.exit(0)
 
 def get_content(url):
-	resp = requests.get(url, allow_redirects=True, timeout=10)
+	resp = requests.get(url, allow_redirects=True)
 	webcontent = resp.text
 	#webcontent = (resp.content).decode()
 	return webcontent
@@ -83,7 +83,7 @@ def make_requests(url):
 
 
 def depth_search(webcontent):
-	links_list = re.findall(r'(?i)href=["\'](.*?)["\']', webcontent)
+	links_list = re.findall(r'(?i)href=["\']?(.*?)[\s > " \']', webcontent)
 	links_list = list(set(links_list))
 	return links_list
 
@@ -99,5 +99,6 @@ else:
 		target_url = target_url[:(len(target_url) - 1)]
 	#print(target_url)
 	make_requests(target_url)
+
 
 
