@@ -44,6 +44,11 @@ def find_css_js_comments(resp):
 	comment_list = re.findall(r"/\*.*?\*/", resp, re.DOTALL)
 	return comment_list
 
+def print_com(list_com):
+	for comm in list_com:
+		print(comm)
+	print("\n")
+
 def fix_http(target_url, link_pgsrc):
 	if link_pgsrc[0] == "/":
 		link_pgsrc = link_pgsrc[1:len(link_pgsrc)]
@@ -57,7 +62,7 @@ def make_requests(url):
 	print(f"[{GREEN}+{WHITE}] Searching for {RED}comments{WHITE} in the main page....\n")
 	webcontent = get_content(url)
 	comment_list = find_html_comments(webcontent)
-	print(comment_list)
+	print_com(comment_list)
 	print(f"\n[{GREEN}+{WHITE}] Gathering {RED}href{WHITE} links in Page.....\n")
 	list_links = depth_search(webcontent)
 	for link in list_links:
@@ -66,15 +71,13 @@ def make_requests(url):
 			print(f"[{GREEN}+{WHITE}] Searching {final_url}....")
 			url_resp = get_content(final_url)
 			list_comm = find_css_js_comments(url_resp)
-			print(list_comm)
-			print("\n")
+			print_com(list_comm)
 		else:
 			final_url = fix_http(url, link)
 			print(f"[{GREEN}+{WHITE}] Searching {final_url}....")
 			url_resp = get_content(final_url)
 			list_comm = find_html_comments(url_resp)
-			print(list_comm)
-			print("\n")
+			print_com(list_comm)
 	print(f"\n[{GREEN}+{WHITE}] Gathering {RED}Javascript{WHITE} Files in Page.....")
 	js_list = pyjs.js_search(webcontent)
 	for link in js_list:
@@ -82,8 +85,7 @@ def make_requests(url):
 		print(f"[{GREEN}+{WHITE}] Searching {final_url}....")
 		url_resp = get_content(final_url)
 		list_comm = find_css_js_comments(url_resp)
-		print(list_comm)
-		print("\n")
+		print_com(list_comm)
 	#print(js_list)
 		
 
@@ -105,4 +107,3 @@ else:
 		target_url = target_url[:(len(target_url) - 1)]
 	#print(target_url)
 	make_requests(target_url)
-
