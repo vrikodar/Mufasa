@@ -15,7 +15,7 @@ def banner(version):
 	print(f"[{GREEN}+{WHITE}] Initializing {RED}Mufasa{WHITE}.....v({RED}{version}{WHITE})")
 	time.sleep(1)
 
-banner("1.1-Alpha")
+banner("1.2-Alpha")
 print(f"[{GREEN}+{WHITE}] Importing {RED}Modules{WHITE}.....")
 try:
 	import pyjs
@@ -24,14 +24,9 @@ except:
 	sys.exit(0)
 
 def get_content(url):
-	try:
-		resp = requests.get(url, allow_redirects=True)
-		webcontent = resp.text
-		return webcontent
-	except Exception as error:
-		print(f"[{RED}!{WHITE}] something went {RED}wrong{WHITE}...")
-		sys.exit(0)
-		pass
+	resp = requests.get(url, allow_redirects=True)
+	webcontent = resp.text
+	return webcontent
 	#webcontent = (resp.content).decode()
 	#webcontent = resp.text
 
@@ -69,13 +64,25 @@ def make_requests(url):
 		if '.css' in link:
 			final_url = fix_http(url, link)
 			print(f"[{GREEN}+{WHITE}] Searching {final_url}....")
-			url_resp = get_content(final_url)
+			try:
+				url_resp = get_content(final_url)
+			except KeyboardInterrupt:
+				print(f"\n[{GREEN}+{WHITE}] {RED}Exiting{WHITE}......\n")
+				sys.exit(0)
+			except:
+				pass
 			list_comm = find_css_js_comments(url_resp)
 			print_com(list_comm)
 		else:
 			final_url = fix_http(url, link)
 			print(f"[{GREEN}+{WHITE}] Searching {final_url}....")
-			url_resp = get_content(final_url)
+			try:
+				url_resp = get_content(final_url)
+			except KeyboardInterrupt:
+				print(f"\n[{GREEN}+{WHITE}] {RED}Exiting{WHITE}......\n")
+				sys.exit(0)
+			except:
+				pass
 			list_comm = find_html_comments(url_resp)
 			print_com(list_comm)
 	print(f"\n[{GREEN}+{WHITE}] Gathering {RED}Javascript{WHITE} Files in Page.....")
@@ -83,7 +90,13 @@ def make_requests(url):
 	for link in js_list:
 		final_url = fix_http(url, link)
 		print(f"[{GREEN}+{WHITE}] Searching {final_url}....")
-		url_resp = get_content(final_url)
+		try:
+			url_resp = get_content(final_url)
+		except KeyboardInterrupt:
+			print(f"\n[{GREEN}+{WHITE}] {RED}Exiting{WHITE}......\n")
+			sys.exit(0)
+		except:
+			pass
 		list_comm = find_css_js_comments(url_resp)
 		print_com(list_comm)
 	#print(js_list)
@@ -107,3 +120,4 @@ else:
 		target_url = target_url[:(len(target_url) - 1)]
 	#print(target_url)
 	make_requests(target_url)
+
