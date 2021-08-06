@@ -109,7 +109,7 @@ def depth_search(webcontent):
 	links_list = list(set(links_list))
 	return links_list
 
-parser = optparse.OptionParser("\n./mufasa --url=<target-url>")
+parser = optparse.OptionParser("\n./mufasa [-h or --help] [-u or --url]=<target-url>")
 parser.add_option("-u", "--url", dest="url_of_target", type='string', help="specify the target url")
 (options, args) = parser.parse_args()
 
