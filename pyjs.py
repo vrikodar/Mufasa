@@ -2,6 +2,8 @@
 
 # Author: z3r0day :: https://github.com/SxNade
 
+# Javascript Module
+
 RED = '\033[1;31;48m'
 WHITE = "\33[0m"
 GREEN = '\033[1;32;48m'
