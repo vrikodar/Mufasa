@@ -4,8 +4,6 @@
 
 Mufasa is a powerful comment scraper , mufasa can automatically scrape comments from Javascript , CSS files used by a website.
 
-**will add more here tomorrow going to sleep now xd**
-
 
 # Installing and Running 
 
