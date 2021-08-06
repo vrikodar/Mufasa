@@ -12,7 +12,7 @@ import re
 import time
 
 def banner(version):
-	print(f"[{GREEN}+{WHITE}] Initializing {RED}Mufasa{WHITE}.....v({RED}{version}{WHITE})")
+	print(f"\n[{GREEN}+{WHITE}] Initializing {RED}Mufasa{WHITE}.....v({RED}{version}{WHITE})")
 	time.sleep(1)
 
 banner("1.2-Alpha")
