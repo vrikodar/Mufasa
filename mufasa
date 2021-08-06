@@ -10,13 +10,14 @@ import requests
 import sys
 import re
 import time
+import optparse
 
 def banner(version):
-	print(f"\n[{GREEN}+{WHITE}] Initializing {RED}Mufasa{WHITE}.....v({RED}{version}{WHITE})")
+	print(f"[{GREEN}+{WHITE}] Initializing {RED}Mufasa{WHITE}.....v({RED}{version}{WHITE})")
 	time.sleep(1)
 
 banner("1.2-Alpha")
-print(f"[{GREEN}+{WHITE}] Importing {RED}Modules{WHITE}.....")
+print(f"[{GREEN}+{WHITE}] Importing {RED}Modules{WHITE}.....\n")
 try:
 	import pyjs
 except:
@@ -108,16 +109,21 @@ def depth_search(webcontent):
 	links_list = list(set(links_list))
 	return links_list
 
+parser = optparse.OptionParser("\n./mufasa --url=<target-url>")
+parser.add_option("-u", "--url", dest="url_of_target", type='string', help="specify the target url")
+(options, args) = parser.parse_args()
 
-if len(sys.argv) < 2:
-    print(f"\n[{RED}!{WHITE}] Insufficent Arguments supplied\n")
-    print("./mufasa <target-url>")
-    sys.exit()
+if (options.url_of_target == None):
+	print(parser.usage)
+	print(f"\n[{RED}!{WHITE}] Insufficent Arguments supplied\n")
+	sys.exit(0)
+
 else:
 	global target_url
-	target_url = sys.argv[1]
+	target_url = options.url_of_target
 	if target_url[-1] == "/":
 		target_url = target_url[:(len(target_url) - 1)]
-	#print(target_url)
 	make_requests(target_url)
+
+
 
