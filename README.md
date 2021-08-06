@@ -16,7 +16,7 @@ Mufasa is a powerful comment scraper , mufasa can automatically scrape comments 
       for help 
       $ ./mufasa --help or ./mufasa -h
       
-      $ ./mufasa --url=<Target-url>
+      $ ./mufasa --url=<Target-url> or ./mufasa -u <Target-url>
 
 
 # NOTE
