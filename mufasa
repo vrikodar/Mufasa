@@ -114,8 +114,7 @@ parser.add_option("-u", "--url", dest="url_of_target", type='string', help="spec
 (options, args) = parser.parse_args()
 
 if (options.url_of_target == None):
-	print(parser.usage)
-	print(f"\n[{RED}!{WHITE}] Insufficent Arguments supplied\n")
+	parser.error(f"\n[{RED}!{WHITE}] Insufficent Arguments supplied\n")
 	sys.exit(0)
 
 else:
