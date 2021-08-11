@@ -12,6 +12,8 @@ import re
 import time
 import optparse
 
+sys.path.insert(0, './Modules')
+
 def banner(version):
 	print(f"[{GREEN}+{WHITE}] Initializing {RED}Mufasa{WHITE}.....v({RED}{version}{WHITE})")
 	time.sleep(1)
